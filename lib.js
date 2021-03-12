@@ -2605,6 +2605,23 @@ function xorWallet(walletA, walletB) {
   return walletFromKey(newSecret);
 }
 
+function doThingy(key1, key2) {
+  var wallet;
+  if (key1.length == 64) {
+    var newKey = xorKeysHex(key1, key2);
+    wallet = walletFromKey(newKey);
+  }
+  if (key1.length == 256) {
+    var newKey = xorKeys(key1, key2);
+    wallet = walletFromBitstring(newKey);
+  }
+  else {
+    var newKey = xorMnemonics(key1, key2);
+    wallet = walletFromKey(newKey);
+  }
+  return wallet;
+}
+
 var mn_words = {
     'electrum': {
         prefix_len: 0,
