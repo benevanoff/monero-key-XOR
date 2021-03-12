@@ -40,6 +40,10 @@ function clicked() {
     var newKey = xorKeys(key1, key2);
     wallet = walletFromBitstring(newKey);
   }
+  else {
+    var newKey = xorMnemonics(key1, key2);
+    wallet = walletFromKey(newKey);
+  }
   mnemonic_p.innerHTML = wallet.mnemonic;
   spend_p.innerHTML = wallet.key_pair.spend;
   view_p.innerHTML = wallet.key_pair.view;
