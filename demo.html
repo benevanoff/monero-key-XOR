@@ -8,34 +8,43 @@
 
 <script src="lib.js"></script>
 
-<p id="mnemonic_p"></p>
+<input type="text" id="key1"></input>
+<input type="text" id="key2"></input>
+<br></br>
+<input type="button" id="button" value="XOR" onclick="clicked()"></input>
 
-<p id="spend_key_p"></p>
-
-<p id="view_key_p"></p>
-
-<p id="bitstring_p"></p>
-
-<p id="test_p"></p>
+<p id="mnemonic"></p>
+<p id="spend"></p>
+<p id="view"></p>
+<p id="binary"></p>
 
 <script>
-var mnemonic_p = document.getElementById("mnemonic_p");
-var spend_key_p = document.getElementById("spend_key_p");
-var view_key_p = document.getElementById("view_key_p");
-var bitstring_p = document.getElementById("bitstring_p");
-var test_p = document.getElementById("test_p");
 
-var key1 = "0111000111000101001110110101101101000000000111011101001110110110110011000111111000110000110101111110011010011111101101111001001101001011101100110100010001101101001010110100110111110110010010001100110000100100100111100101001100101001001101001001111000000010";
-var key2 = "1000101101010111011101010010101001001001000011100000000100111101011100011011001011011101110100110011101100110001010101110000100101001101011010101001110001101100010100100011000000001010000110010101000101000101001001010100100111110111000110010100001111001101";
+var mnemonic_p = document.getElementById("mnemonic");
+var spend_p = document.getElementById("spend");
+var view_p = document.getElementById("view");
+var binary_p = document.getElementById("binary");
 
-var wallet = walletFromBitstring(key1);
+//var key1 = "0111000111000101001110110101101101000000000111011101001110110110110011000111111000110000110101111110011010011111101101111001001101001011101100110100010001101101001010110100110111110110010010001100110000100100100111100101001100101001001101001001111000000010";
+//var key2 = "1000101101010111011101010010101001001001000011100000000100111101011100011011001011011101110100110011101100110001010101110000100101001101011010101001110001101100010100100011000000001010000110010101000101000101001001010100100111110111000110010100001111001101";
 
-mnemonic_p.innerHTML = wallet.mnemonic;
-spend_key_p.innerHTML = wallet.key_pair.spend;
-view_key_p.innerHTML = wallet.key_pair.view;
-bitstring_p.innerHTML = wallet.bitstring;
-
-test_p.innerHTML = xorKeys(key1, key2);
+function clicked() {
+  var key1 = document.getElementById("key1").value;
+  var key2 = document.getElementById("key2").value;
+  var wallet;
+  if (key1.length == 64) {
+    var newKey = xorKeysHex(key1, key2);
+    wallet = walletFromKey(newKey);
+  }
+  if (key1.length == 256) {
+    var newKey = xorKeys(key1, key2);
+    wallet = walletFromBitstring(newKey);
+  }
+  mnemonic_p.innerHTML = wallet.mnemonic;
+  spend_p.innerHTML = wallet.key_pair.spend;
+  view_p.innerHTML = wallet.key_pair.view;
+  binary_p.innerHTML = wallet.bitstring;
+}
 
 </script>
 </body>
