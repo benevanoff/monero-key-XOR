@@ -31,19 +31,7 @@ var binary_p = document.getElementById("binary");
 function clicked() {
   var key1 = document.getElementById("key1").value;
   var key2 = document.getElementById("key2").value;
-  var wallet;
-  if (key1.length == 64) {
-    var newKey = xorKeysHex(key1, key2);
-    wallet = walletFromKey(newKey);
-  }
-  if (key1.length == 256) {
-    var newKey = xorKeys(key1, key2);
-    wallet = walletFromBitstring(newKey);
-  }
-  else {
-    var newKey = xorMnemonics(key1, key2);
-    wallet = walletFromKey(newKey);
-  }
+  var wallet = doThingy(key1, key2);
   mnemonic_p.innerHTML = wallet.mnemonic;
   spend_p.innerHTML = wallet.key_pair.spend;
   view_p.innerHTML = wallet.key_pair.view;
