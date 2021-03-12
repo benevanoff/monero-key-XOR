@@ -2551,14 +2551,14 @@ function bitstringToHex(bits) {
 }
 
 function walletFromKey(secret_key) {
-  var mnemonic = mn_encode(secret_key);
+  var mnemonic = mn_encode(secret_key, 'english');
   var bitstring = bin2bitstring(cnUtil.hextobin(secret_key));
   var wallet = new Wallet(secret_key, mnemonic, bitstring);
   return wallet;
 }
 
 function walletFromMnemonic(mnemonic) {
-  var secret_key = mn_decode(mnemonic);
+  var secret_key = mn_decode(mnemonic, 'english');
   var bitstring = bin2bitstring(cnUtil.hextobin(secret_key));
   var wallet = new Wallet(secret_key, mnemonic, bitstring);
   return wallet;
@@ -2595,9 +2595,9 @@ function xorKeysHex(keyA, keyB) {
 }
 
 function xorMnemonics(mnemonicA, mnemonicB) {
-  var keyA = mn_decode(mnemonicA);
-  var keyB = mn_decode(mnemonicB);
-  return mn_encode(xorKeysHex(keyA, keyB));
+  var keyA = mn_decode(mnemonicA, 'english');
+  var keyB = mn_decode(mnemonicB, 'english');
+  return xorKeysHex(keyA, keyB);
 }
 
 function xorWallet(walletA, walletB) {
